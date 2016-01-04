@@ -42,6 +42,11 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
                                         title: "City",
                                         type: "string",
                                     },
+                                    city2: {
+                                        title: "City2",
+                                        type: "string",
+                                        
+                                    },
                                 }
                             }
                         }
@@ -63,6 +68,8 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
             style: {
                 add: "btn-success"
             },
+            htmlClass:'superParentHtmlClass',
+            fieldHtmlClass: "superParentFiled",
             items: [
                 {
                     key: "rows[].country",
@@ -87,7 +94,9 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
                         add: "btn-success"
                     },
                     condition:"model.rows[arrayIndex].country",
-                    fieldHtmlClass: "not-sortable col-md-3",
+                    htmlClass:'parentHtmlClass',
+                    fieldHtmlClass: "parentField",
+                    decoratorClass: "row",
                     items: [
                          {
                             key: "rows[].cities[].city",
@@ -104,7 +113,28 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
                                     return deffered.promise;     
                                 },
                             }, 
+                            htmlClass:"col-md-6",
+                            filedHtmlClass:"childFiledHtml",
                         },
+                        {
+                            key: "rows[].cities[].city2",
+                            type: 'strapselectasync', 
+                            options: {
+                                "asyncCallback": function fetchCity(form) {
+                                    var deffered = $q.defer();
+                                    $timeout(function(){
+                                        deffered.resolve({data:[
+                                                {"value": "warsaw", "text": "Warsaw"},
+                                                {"value": "wroclaw", "name": "Wroclaw"}
+                                        ]});
+                                    },2000)
+                                    return deffered.promise;     
+                                },
+                            },
+                            htmlClass:"col-md-6",
+                            filedHtmlClass:"childFiledHtml",
+                            
+                        } 
                     ]
                 },
             ]
