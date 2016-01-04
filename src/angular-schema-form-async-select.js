@@ -1,16 +1,3 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['angular-schema-form'], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory(require('angular-schema-form'));
-  } else {
-    root.angularSchemaFormDynamicSelect = factory(root.schemaForm);
-  }
-}(this, function(schemaForm) {
-angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/strap/strapmultiselect.html","<div ng-controller=\"dynamicSelectController\" class=\"form-group {{form.htmlClass}}\"\n     ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\">\n    <label class=\"control-label {{form.labelHtmlClass}}\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div class=\"form-group {{form.fieldHtmlClass}}\" ng-init=\"populateTitleMap(form)\">\n        <button type=\"button\" class=\"btn btn-default\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\"\n                data-multiple=\"1\"  data-multiple=\"1\" data-max-length=\"{{form.options.inlineMaxLength}}\"\n                data-max-length-html=\"{{form.options.inlineMaxLengthHtml}}\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <span class=\"help-block\">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>\n    </div>\n</div>\n");
-$templateCache.put("directives/decorators/bootstrap/strap/strapselect.html","<div ng-controller=\"dynamicSelectController\" class=\"form-group {{form.htmlClass}}\"\n     ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\">\n    <label class=\"control-label {{form.labelHtmlClass}}\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div class=\"form-group {{form.fieldHtmlClass}}\" ng-init=\"populateTitleMap(form)\">\n        <button ng-if=\"(form.options.multiple == \'true\') || (form.options.multiple == true)\"\n                type=\"button\" class=\"btn btn-default\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\" data-multiple=\"1\" data-max-length=\"{{form.options.inlineMaxLength}}\"\n                data-max-length-html=\"{{form.options.inlineMaxLengthHtml}}\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <button ng-if=\"!((form.options.multiple == \'true\') || (form.options.multiple == true))\"\n                type=\"button\" class=\"btn btn-default\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <span class=\"help-block\">{{ (hasError() && errorMessage(schemaError())) || form.description}} </span>\n    </div>\n</div>\n\n");}]);
-angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/uiselect/uiselect.html","<div ng-controller=\"dynamicSelectController\" class=\"form-group\"\n     ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"\n         ng-init=\"insideModel=$$value$$;\">\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div class=\"form-group\">\n        <ui-select ng-model=\"select_model.selected\"\n                   ng-if=\"!(form.options.tagging||false)\" theme=\"bootstrap\" ng-disabled=\"form.disabled\"\n                   on-select=\"$$value$$=$item.value\" class=\"{{form.options.uiClass}}\">\n            <ui-select-match\n                    placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\' | translate)}}\">\n                {{select_model.selected.name}}\n            </ui-select-match>\n            <ui-select-choices refresh=\"populateTitleMap(form, $select.search)\"\n                               refresh-delay=\"form.options.refreshDelay\" group-by=\"form.options.groupBy\"\n                               repeat=\"item in form.titleMap | propsFilter: {name: $select.search, description: (form.options.searchDescriptions===true ? $select.search : \'NOTSEARCHINGFORTHIS\') }\">\n                <div ng-bind-html=\"item.name | highlight: $select.search\"></div>\n                <div ng-if=\"item.description\">\n                    <span ng-bind-html=\"\'<small>\' + (\'\'+item.description | highlight: (form.options.searchDescriptions===true ? $select.search : \'NOTSEARCHINGFORTHIS\'))+ \'</small>\'\"></span>\n                </div>\n            </ui-select-choices>\n        </ui-select>\n        <ui-select ng-controller=\"dynamicSelectController\" ng-model=\"select_model.selected\"\n                   ng-if=\"(form.options.tagging||false) && !(form.options.groupBy || false)\"\n                   tagging=\"form.options.tagging||false\" tagging-label=\"form.options.taggingLabel\"\n                   tagging-tokens=\"form.options.taggingTokens\"\n                   theme=\"bootstrap\" ng-disabled=\"form.disabled\" on-select=\"$$value$$=$item.value\"\n                   class=\"{{form.options.uiClass}}\">\n            <ui-select-match\n                    placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\' | translate)}}\">\n                {{select_model.selected.name}}&nbsp;\n                <small>{{(select_model.selected.isTag===true ? form.options.taggingLabel : \'\')}}</small>\n            </ui-select-match>\n            <!--repeat code because tagging does not display properly under group by but is still useful -->\n            <ui-select-choices refresh=\"populateTitleMap(form, $select.search))\"\n                               refresh-delay=\"form.options.refreshDelay\"\n                               repeat=\"item in form.titleMap | propsFilter: {name: $select.search, description: (form.options.searchDescription===true ? $select.search : \'NOTSEARCHINGFORTHIS\') }\">\n                <div ng-if=\"item.isTag\"\n                     ng-bind-html=\"\'<div>\' + (item.name   | highlight: $select.search) + \' \' + form.options.taggingLabel + \'</div><div class=&quot;divider&quot;></div>\'\"></div>\n                <div ng-if=\"!item.isTag\" ng-bind-html=\"item.name + item.isTag| highlight: $select.search\"></div>\n                <div ng-if=\"item.description\">\n                    <span ng-bind-html=\"\'<small>\' + (\'\'+item.description | highlight: (form.options.searchDescriptions===true ? $select.search : \'NOTSEARCHINGFORTHIS\')) + \'</small>\'\"></span>\n                </div>\n            </ui-select-choices>\n        </ui-select>\n\n        <!--repeat code because tagging does not display properly under group by but is still useful -->\n\n        <ui-select ng-controller=\"dynamicSelectController\" ng-model=\"select_model.selected\"\n                   ng-if=\"(form.options.tagging||false) && (form.options.groupBy || false)\"\n                   tagging=\"form.options.tagging||false\" tagging-label=\"form.options.taggingLabel\"\n                   tagging-tokens=\"form.options.taggingTokens\"\n                   theme=\"bootstrap\" ng-disabled=\"form.disabled\" on-select=\"$$value$$=$item.value\"\n                   class=\"{{form.options.uiClass}}\">\n            <ui-select-match\n                    placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\' | translate)}}\">\n                {{select_model.selected.name}}&nbsp;\n                <small>{{(select_model.selected.isTag===true ? form.options.taggingLabel : \'\')}}</small>\n            </ui-select-match>\n            <ui-select-choices group-by=\"form.options.groupBy\"\n                               refresh=\"populateTitleMap(form, $select.search)\"\n                               refresh-delay=\"form.options.refreshDelay\"\n                               repeat=\"item in form.titleMap | propsFilter: {name: $select.search, description: (form.options.searchDescription===true ? $select.search : \'NOTSEARCHINGFORTHIS\') }\">\n                <div ng-if=\"item.isTag\"\n                     ng-bind-html=\"\'<div>\' + (item.name  | highlight: $select.search) + \' \' + form.options.taggingLabel + \'</div><div class=&quot;divider&quot;></div>\'\"></div>\n                <div ng-if=\"!item.isTag\" ng-bind-html=\"item.name + item.isTag| highlight: $select.search\"></div>\n                <div ng-if=\"item.description\">\n                    <span ng-bind-html=\"\'<small>\' + (\'\'+item.description | highlight: (form.options.searchDescriptions===true ? $select.search : \'NOTSEARCHINGFORTHIS\')) + \'</small>\'\"></span>\n                </div>\n            </ui-select-choices>\n        </ui-select>\n\n        <input type=\"hidden\" toggle-single-model sf-changed=\"form\" ng-model=\"insideModel\" schema-validate=\"form\"/>\n    <span ng-if=\"form.feedback !== false\"\n          class=\"form-control-feedback\"\n          ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"></span>\n\n        <div class=\"help-block\"\n             ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n             ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div>\n    </div>\n</div>\n");
-$templateCache.put("directives/decorators/bootstrap/uiselect/uiselectmultiple.html","\n<div class=\"form-group\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"\n        ng-controller=\"dynamicSelectController\" ng-init=\"uiMultiSelectInitInternalModel($$value$$)\">\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <div class=\"form-group\">\n    <ui-select multiple sortable-options=\"{{form.sortableOptions}}\" ng-model=\"internalModel\" theme=\"bootstrap\"\n               on-select=\"$$value$$.push($item.value)\" on-remove=\"$$value$$.splice($$value$$.indexOf($item.value), 1)\"\n               class=\"{{form.options.uiClass}}\">\n      <ui-select-match placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\' | translate)}}\">{{$item.name}}</ui-select-match>\n      <ui-select-choices repeat=\"item in form.titleMap | propsFilter: {name: $select.search}\"\n         refresh=\"populateTitleMap(form, $select.search)\"\n         refresh-delay=\"form.options.refreshDelay\">\n        <div ng-bind-html=\"item.name | highlight: $select.search\"></div>\n      </ui-select-choices>\n    </ui-select>\n    <span ng-if=\"form.feedback !== false\"\n      class=\"form-control-feedback\"\n      ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"></span>\n    <div class=\"help-block\"\n      ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n      ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div>\n  </div>\n</div>");}]);
 angular.module('schemaForm').config(
     ['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider',
         function (schemaFormProvider, schemaFormDecoratorsProvider, sfPathProvider) {
@@ -33,10 +20,10 @@ angular.module('schemaForm').config(
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapmultiselect',
                 'directives/decorators/bootstrap/strap/strapmultiselect.html');
 
-            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapselectdynamic',
+            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapselectasync',
                 'directives/decorators/bootstrap/strap/strapselect.html');
 
-            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapmultiselectdynamic',
+            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapmultiselectasync',
                 'directives/decorators/bootstrap/strap/strapmultiselect.html');
 
 
@@ -146,7 +133,7 @@ angular.module('schemaForm').config(
         };
     });
 
-angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
     if (!$scope.form.options) {
         $scope.form.options = {};
@@ -154,11 +141,11 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
 
     $scope.select_model = {};
 
-    console.log("Setting options." + $scope.form.options.toString());
+    //console.log("Setting options." + $scope.form.options.toString());
     $scope.form.options.scope = $scope;
 
     $scope.triggerTitleMap = function () {
-        console.log("listener triggered");
+        //console.log("listener triggered");
         // Ugly workaround to trigger titleMap expression re-evaluation so that the selectFilter it reapplied.
         $scope.form.titleMap.push({"value": "345890u340598u3405u9", "name": "34095u3p4ouij"})
         $timeout(function () { $scope.form.titleMap.pop() })
@@ -223,7 +210,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
 
         // The ui-selects needs to be reinitialized (UI select sets the internalModel and externalModel.
         if ($scope.internalModel) {
-            console.log("Call uiMultiSelectInitInternalModel");
+            //console.log("Call uiMultiSelectInitInternalModel");
             $scope.uiMultiSelectInitInternalModel($scope.externalModel);
         }
     };
@@ -296,18 +283,18 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
         }
         else if (!form.options) {
 
-            console.log("dynamicSelectController.populateTitleMap(key:" + form.key + ") : No options set, needed for dynamic selects");
+            //console.log("dynamicSelectController.populateTitleMap(key:" + form.key + ") : No options set, needed for dynamic selects");
         }
         else if (form.options.callback) {
             form.titleMap = $scope.getCallback(form.options.callback)(form.options, search);
             $scope.finalizeTitleMap(form,form.titleMap, form.options);
-            console.log("callback items: ", form.titleMap);
+            //console.log("callback items: ", form.titleMap);
         }
         else if (form.options.asyncCallback) {
             return $scope.getCallback(form.options.asyncCallback)(form.options, search).then(
                 function (_data) {
                     $scope.finalizeTitleMap(form, _data.data, form.options);
-                    console.log('asyncCallback items', form.titleMap);
+                    //console.log('asyncCallback items', form.titleMap);
                 },
                 function (data, status) {
                     alert("Loading select items failed(Options: '" + String(form.options) +
@@ -321,7 +308,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
                 function (_data) {
 
                     $scope.finalizeTitleMap(form, _data.data, finalOptions);
-                    console.log('httpPost items', form.titleMap);
+                    //console.log('httpPost items', form.titleMap);
                 },
                 function (data, status) {
                     alert("Loading select items failed (URL: '" + String(finalOptions.httpPost.url) +
@@ -333,7 +320,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
             return $http.get(finalOptions.httpGet.url, finalOptions.httpGet.parameter).then(
                 function (data) {
                     $scope.finalizeTitleMap(form, data.data, finalOptions);
-                    console.log('httpGet items', form.titleMap);
+                    //console.log('httpGet items', form.titleMap);
                 },
                 function (data, status) {
                     alert("Loading select items failed (URL: '" + String(finalOptions.httpGet.url) +
@@ -356,7 +343,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
     {
 
 
-        console.log("$scope.externalModel: Key: " +$scope.form.key.toString() + " Model: " + supplied_model.toString());
+        //console.log("$scope.externalModel: Key: " +$scope.form.key.toString() + " Model: " + supplied_model.toString());
         $scope.externalModel = supplied_model;
         $scope.internalModel = [];
         if ($scope.form.titleMap) {
@@ -385,10 +372,10 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
 
 
 
-        console.log("----- In filtering for " + controller.form.key + "(" + controller.form.title +"), model value: " + JSON.stringify( localModel) + "----");
-        console.log("Filter:" + controller.form.options.filter);
+        //console.log("----- In filtering for " + controller.form.key + "(" + controller.form.title +"), model value: " + JSON.stringify( localModel) + "----");
+        //console.log("Filter:" + controller.form.options.filter);
         if (!controller.filteringInitialized) {
-            console.log("Initialize filter");
+            //console.log("Initialize filter");
             controller.initFiltering(localModel);
         }
 
@@ -397,7 +384,7 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
 
 
         angular.forEach(inputArray, function (curr_item) {
-            //console.log("Compare: curr_item: " + JSON.stringify(curr_item) +
+            ////console.log("Compare: curr_item: " + JSON.stringify(curr_item) +
             //"with : " + JSON.stringify( controller.$eval(controller.form.options.filterTriggers[0])));
             if (controller.$eval(controller.form.options.filter, {item: curr_item})) {
                 data.push(curr_item);
@@ -409,7 +396,7 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
                     localModel.splice(localModel.indexOf(curr_item.value), 1);
                 }
                 else if (localModel == curr_item.value) {
-                    console.log("Setting model of type " + controller.localModelType  + "to null.");
+                    //console.log("Setting model of type " + controller.localModelType  + "to null.");
                     localModel = null;
                 }
             }
@@ -417,18 +404,16 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
 
         if (controller.localModelType == "[object Array]" && !localModel) {
             // An undefined local model seems to mess up bootstrap select's indicators
-            console.log("Resetting model of type " + controller.localModelType  + " to [].");
+            //console.log("Resetting model of type " + controller.localModelType  + " to [].");
 
             controller.$eval(strLocalModel + "=[]");
         }
 
-        //console.log("Input: " + JSON.stringify(inputArray));
-        //console.log("Output: " + JSON.stringify(data));
-        //console.log("Model value out : " + JSON.stringify(localModel));
-        console.log("----- Exiting filter for " + controller.form.title + "-----");
+        ////console.log("Input: " + JSON.stringify(inputArray));
+        ////console.log("Output: " + JSON.stringify(data));
+        ////console.log("Model value out : " + JSON.stringify(localModel));
+        //console.log("----- Exiting filter for " + controller.form.title + "-----");
 
         return data;
     };
 }]);
-
-}));

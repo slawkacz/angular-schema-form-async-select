@@ -2,13 +2,14 @@
   "name": "angular-schema-form-dynamic-select",
   "description": "Dynamic select add-on for angular schema form.",
   "main": [
-    "angular-schema-form-dynamic-select.min.js"
+    "angular-schema-form-async-select.min.js"
   ],
-  "version": "0.12.4",
+  "version": "0.1",
   "authors": [
     "Cheng Zhu<cheng@aqmin.com>",
     "Stevehu",
-    "Nicklas Börjesson<nicklas@optimalbpm.se>"
+    "Nicklas Börjesson<nicklas@optimalbpm.se>",
+    "Slawomir Kaczorowski<skaczorowski@opera.com>"
   ],
   "moduleType": [
     "globals"

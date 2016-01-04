@@ -53,7 +53,7 @@ gulp.task('minify', function() {
   stream.queue(gulp.src('./src/*.js'));
 
   stream.done()
-        .pipe(concat('angular-schema-form-dynamic-select.min.js'))
+        .pipe(concat('angular-schema-form-async-select.min.js'))
         .pipe(umd({
             dependencies: function() {
               return [
@@ -62,8 +62,8 @@ gulp.task('minify', function() {
                 cjs: 'angular-schema-form'},
               ];
             },
-            exports: function() {return 'angularSchemaFormDynamicSelect';},
-            namespace: function() {return 'angularSchemaFormDynamicSelect';}
+            exports: function() {},
+            namespace: function() {return 'angularSchemaFormAsyncSelect';}
             }))
         .pipe(uglify())
         .pipe(gulp.dest('.'));
@@ -89,7 +89,7 @@ gulp.task('non-minified-dist', function() {
   stream.queue(gulp.src('./src/*.js'));
 
   stream.done()
-        .pipe(concat('angular-schema-form-dynamic-select.js'))
+        .pipe(concat('angular-schema-form-async-select.js'))
         .pipe(umd({
             dependencies: function() {
               return [
@@ -98,8 +98,8 @@ gulp.task('non-minified-dist', function() {
                 cjs: 'angular-schema-form'},
               ];
             },
-            exports: function() {return 'angularSchemaFormDynamicSelect';},
-            namespace: function() {return 'angularSchemaFormDynamicSelect';}
+            exports: function() {},
+            namespace: function() {return 'angularSchemaFormAsyncSelect';}
             }))
         .pipe(gulp.dest('.'));
 
