@@ -19,7 +19,7 @@
                 bs-options="item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;"
                 bs-select>
         </button>
-        <div class="" ng-if="!form.titleMap" >Wait for values</div>
+        <loader class="" ng-if="!form.titleMap">Loader</loader>
         <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}} </span>
     </div>
 </div>

@@ -8,7 +8,7 @@
     <link href="bower_components/angular-ui-select/dist/select.css" rel="stylesheet" />
 
     <link href="app.css" media="all" rel="stylesheet" />
-
+ <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <!--  !-->
     <script src='bower_components/angular-ui-select/dist/select.js'></script>
@@ -22,13 +22,15 @@
     <script src="bower_components/objectpath/lib/ObjectPath.js"></script>
     <script src="bower_components/angular-schema-form/dist/schema-form.js"></script>
     <script src="bower_components/angular-schema-form/dist/bootstrap-decorator.js"></script>
+   
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 
 
     <script src="ui-sortable.js"></script>
 
     <script src="angular-schema-form-async-select.js"></script>
     <script src="app.js"></script>
-    <title>Angular schema form dynamic select example</title>
+    <title>Angular schema form async select example</title>
 </head>
 <body ng-controller='appController' class="container">
 <h1>Example</h1>
@@ -36,9 +38,7 @@
 <p>This is an example of the features of <a href="https://github.com/OptimalBPM/angular-schema-form-dynamic-select">Angular
     schema form dynamic select</a></p>
 
-<p>Please <a href="https://github.com/OptimalBPM/angular-schema-form-dynamic-select/issues">report any issues or bugs
-    you may find.</a></p>
 
-<form name="selectForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="submitted(selectForm)"></form>
+<form name="selectForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="submitted(selectForm)" sf-options="options"></form>
 </body>
 </html>

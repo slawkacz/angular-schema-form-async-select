@@ -7,7 +7,7 @@
  * @type {angular.Module}
  */
 
-var testApp = angular.module("testApp", ["schemaForm", "mgcrea.ngStrap", "mgcrea.ngStrap.modal",
+var testApp = angular.module("testApp", ["ui.sortable","schemaForm", "mgcrea.ngStrap", "mgcrea.ngStrap.modal",
     "pascalprecht.translate", "ui.select", "mgcrea.ngStrap.select"
 
 ]);
@@ -51,6 +51,11 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
         }
     };
 
+    $scope.options = {
+      sortableOptions: {
+        items: "li:not(.not-sortable)"
+      }  
+    };
     $scope.form = [
         {
             key: "rows",
@@ -73,7 +78,7 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
                                     },2000)
                                     return deffered.promise;
                         }
-                    }
+                    },
                 },
                 {
                     key: 'rows[].cities',
@@ -82,6 +87,7 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
                         add: "btn-success"
                     },
                     condition:"model.rows[arrayIndex].country",
+                    fieldHtmlClass: "not-sortable col-md-3",
                     items: [
                          {
                             key: "rows[].cities[].city",
@@ -95,10 +101,9 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
                                                 {"value": "wroclaw", "name": "Wroclaw"}
                                         ]});
                                     },2000)
-                                    return deffered.promise;
-                                    
+                                    return deffered.promise;     
                                 },
-                            },
+                            }, 
                         },
                     ]
                 },
@@ -106,7 +111,6 @@ testApp.controller("appController",  function ($scope, $q, $timeout) {
         }
     ];
     $scope.model = {};
-    
     $scope.submitted = function (form) {
         $scope.$broadcast("schemaFormValidate");
         console.log($scope.model);

@@ -20,6 +20,9 @@ angular.module('schemaForm').config(
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapmultiselect',
                 'directives/decorators/bootstrap/strap/strapmultiselect.html');
 
+            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'array',
+                'directives/decorators/bootstrap/strap/straparray.html');
+
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapselectasync',
                 'directives/decorators/bootstrap/strap/strapselect.html');
 
