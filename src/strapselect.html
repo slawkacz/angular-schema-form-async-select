@@ -1,9 +1,9 @@
 <div ng-controller="asyncSelectController" class="form-group {{form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-    <label class="control-label {{form.labelHtmlClass}}" ng-show="showTitle()">{{form.title}}</label>
+    <label class="{{form.labelHtmlClass}}" ng-show="showTitle()">{{form.title}}</label>
     <div class="form-group {{form.fieldHtmlClass}}" ng-init="populateTitleMap(form)">
         <button ng-if="(form.options.multiple == 'true') || (form.options.multiple == true)"
-                type="button" class="btn btn-default" sf-changed="form" schema-validate="form" ng-model="$$value$$"
+                type="button" class="grey lighten-5 black-text btn-sm btn" sf-changed="form" schema-validate="form" ng-model="$$value$$"
                 data-index="{{$index}}"
                 data-parent="{{$parent.$index}}"
                 data-placeholder="{{form.placeholder || form.schema.placeholder || ('placeholders.select')}}"
@@ -13,13 +13,13 @@
                 bs-select>
         </button>
         <button ng-if="!((form.options.multiple == 'true') || (form.options.multiple == true)) && form.titleMap"
-                type="button" class="btn btn-default" sf-changed="form" schema-validate="form" ng-model="$$value$$"
+                type="button" class="grey lighten-5 black-text btn-sm btn" sf-changed="form" schema-validate="form" ng-model="$$value$$"
                 data-placeholder="{{form.placeholder || form.schema.placeholder || ('placeholders.select')}}"
                 data-html="1"
                 bs-options="item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;"
                 bs-select>
         </button>
-        <loader class="" ng-if="!form.titleMap">Loader</loader>
+        <loader class="" ng-if="!form.titleMap"></loader>
         <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}} </span>
     </div>
 </div>
