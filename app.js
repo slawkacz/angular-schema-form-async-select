@@ -12,134 +12,223 @@ var testApp = angular.module("testApp", ["ui.sortable","schemaForm", "mgcrea.ngS
 
 ]);
 
-testApp.controller("appController",  function ($scope, $q, $timeout) {
+testApp.controller("appController",  function ($scope, $q, $timeout,$http) {
     $scope.callBackMSDAsync = function (options) {
+        console.log(options.scope.model);
+        //debugger;
+        
         // Note that we got the url from the options. Not necessary, but then the same callback function can be used
         // by different selects with different parameters.
 
         // The asynchronous function must always return a httpPromise
-        return $http.get(options.urlOrWhateverOptionIWant);
+        return $http.get('http://demo4479344.mockable.io/city?country=poland');
     };
-    $scope.schema ={
+    $scope.schema = {
+        subtitle: {
+            type: 'string',
+            title: 'Subtitle'
+        },
         type: "object",
         title: "Rows",
         properties: {
-            rows: {
+            timeperiod: {
+                type: 'string',
+                title: 'Timeperiod',
+                placeholder: 'Select time period'
+            },
+            product_id: {
+                title: "Product",
+                type: "string",
+                placeholder: 'Select product'
+            },
+            drilldown: {
                 type: "array",
+                title: "Filters",
                 items: {
                     type: "object",
                     properties: {
-                        country: {
-                            title: "Country",
+                        variable: {
+                            title: "Variable",
                             type: "string",
+                            placeholder: 'Select variable'
                         },
-                        cities: {
-                            type: "array",
-                            items: {
-                                type: "object",
-                                properties: {
-                                    city: {
-                                        title: "City",
-                                        type: "string",
-                                    },
-                                    city2: {
-                                        title: "City2",
-                                        type: "string",
-                                        
-                                    },
-                                }
-                            }
+                        variable_value: {
+                            title: "Variable Value",
+                            type: "string",
+                            placeholder: 'Select variable value'
                         }
                     }
                 }
+            },
+            variable: {
+                title: "Variable",
+                type: "string",
+                placeholder: 'Select variable'
+            },
+            metric: {
+                type: 'string',
+                title: 'Metric',
+                placeholder: 'Select metric'
+
+            },
+            total: {
+                type: 'string',
+                title: 'Show Total',
+                placeholder: 'Total on graph'
+            },
+            topX: {
+                type: 'integer',
+                title: 'TopX',
+                placeholder: 'Select number of variable values on graph',
+                enum: [5, 10, 15]
             }
-        }
+        },
+        "required": [
+            "timeperiod",
+            "metric",
+            "variable"
+        ]
     };
 
-    $scope.options = {
+    $scope.optionsFX = {
       sortableOptions: {
         items: "li:not(.not-sortable)"
       }  
     };
     $scope.form = [
-        {
-            key: "rows",
-            add: "Add Country",
-            style: {
-                add: "btn-success"
-            },
-            htmlClass:'superParentHtmlClass',
-            fieldHtmlClass: "superParentFiled",
-            items: [
                 {
-                    key: "rows[].country",
+                    key: "subtitle",
+                    type: "text",
+                },
+                {
+                    key: 'timeperiod',
+                    type: "strapselect",
+                    titleMap: [
+                        { value: "{{=CURRENT_MONTH}}", name: "Monthly" },
+                        { value: "{{=CURRENT_WEEK}}", name: "Weekly" },
+                        { value: "{{=CURRENT_DAY}}", name: "Daily" }
+                    ],
+                    onChange: function (modelValue) {
+                        //$scope.$
+                       // scope.model.drilldown = scope.model.drilldown.slice(0, 1);
+                       // delete scope.model.metrics;
+                        $scope.$broadcast('refreshSelect');
+                    },
+                    // htmlClass: "col-md-4",
+                },
+                {
+                    key: "product_id",
                     "type": 'strapselectasync',
                     "options": {
-                        "asyncCallback": function fetchCountries(){
-                             var deffered = $q.defer();
-                                    $timeout(function(){
-                                        deffered.resolve({data:[
-                                                {"value": "poland", "text": "Poland"},
-                                                {"value": "russia", "name": "Russia"}
-                                        ]});
-                                    },2000)
-                                    return deffered.promise;
-                        }
+                        "asyncCallback":  $scope.callBackMSDAsync,
                     },
+                    onChange: function () {
+                        //scope.$broadcast('schemaFormRedraw')
+                    },
+                    // htmlClass: "col-md-4",
                 },
                 {
-                    key: 'rows[].cities',
-                    add: "Add City",
+                    key: 'topX',
+                    type: "strapselect",
+                    condition: "model.timeperiod && model.product_id",
+                    // htmlClass: "col-md-4",
+                },
+                
+                {
+                    key: 'drilldown',
+                    add: "Add Filter",
                     style: {
-                        add: "btn-success"
+                        add: "btn-flat"
                     },
-                    condition:"model.rows[arrayIndex].country",
-                    htmlClass:'parentHtmlClass',
-                    fieldHtmlClass: "parentField",
+                    condition: "model.timeperiod && model.product_id && model.metric",
+                    htmlClass: 'row',
+                    fieldHtmlClass: "col-md-12 not-sortable",
                     decoratorClass: "row",
                     items: [
-                         {
-                            key: "rows[].cities[].city",
-                            type: 'strapselectasync', 
+                        {
+                            key: "drilldown[].variable",
+                            type: 'strapselectasync',
                             options: {
-                                "asyncCallback": function fetchCity(form) {
-                                    var deffered = $q.defer();
-                                    $timeout(function(){
-                                        deffered.resolve({data:[
-                                                {"value": "warsaw", "text": "Warsaw"},
-                                                {"value": "wroclaw", "name": "Wroclaw"}
-                                        ]});
-                                    },2000)
-                                    return deffered.promise;     
-                                },
-                            }, 
-                            htmlClass:"col-md-6",
-                            filedHtmlClass:"childFiledHtml",
+                                asyncCallback:  $scope.callBackMSDAsync,
+                            },
+                            onChange: function () {
+                                //scope.$broadcast('schemaFormRedraw');
+                            },
+                            params: {
+                                product_id: 'model.product_id',
+                                drilldown: 'model.drilldown',
+                                current: 'model.drilldown[{{=drilldown}}]',
+                                timeperiod: 'model.timeperiod',
+                            },
+                            // htmlClass: "col-md-6",
+                            fieldHtmlClass: "not-sortable",
                         },
                         {
-                            key: "rows[].cities[].city2",
-                            type: 'strapselectasync', 
+                            key: "drilldown[].variable_value",
+                            type: 'strapselectasync',
                             options: {
-                                "asyncCallback": function fetchCity(form) {
-                                    var deffered = $q.defer();
-                                    $timeout(function(){
-                                        deffered.resolve({data:[
-                                                {"value": "warsaw", "text": "Warsaw"},
-                                                {"value": "wroclaw", "name": "Wroclaw"}
-                                        ]});
-                                    },2000)
-                                    return deffered.promise;     
-                                },
+                                asyncCallback:  $scope.callBackMSDAsync,
                             },
-                            htmlClass:"col-md-6",
-                            filedHtmlClass:"childFiledHtml",
-                            
-                        } 
+                            onChange: function () {
+                                //scope.$broadcast('schemaFormRedraw')
+                            },
+                            params: {
+                                product_id: 'model.product_id',
+                                timeperiod: 'model.timeperiod',
+                                drilldown: 'model.drilldown',
+                                current: 'model.drilldown[{{=drilldown}}]',
+                                variable: 'model.drilldown[{{=drilldown}}].variable',
+                                metric_names: 'model.metric',
+                                records_per_page: 10,
+                                sort_metric: 'model.metric',
+                                sort_order: 'DESC',
+                                page: 1,
+                            },
+                            // htmlClass: "col-md-6",
+                            // fieldHtmlClass: "not-sortable",
+                        }
                     ]
                 },
-            ]
-        }
-    ];
+                {
+                    key: "variable",
+                    type: 'strapselectasync',
+                    condition: "model.timeperiod && model.product_id",
+                    options: {
+                        asyncCallback:  $scope.callBackMSDAsync,
+                    },
+                    onChange: function () {
+                        //scope.$broadcast('schemaFormRedraw');
+                    },
+                    params: {
+                        product_id: 'model.product_id',
+                        drilldown: 'model.drilldown',
+                        timeperiod: 'model.timeperiod',
+                    },
+                    // htmlClass: "col-md-6",
+                    // fieldHtmlClass: "not-sortable",
+                },
+                {
+                    key: 'metric',
+                    type: "strapselectasync",
+                    condition: "model.timeperiod && model.product_id && model.variable",
+                    "options": {
+                        "asyncCallback":  $scope.callBackMSDAsync
+                    },
+                    params: {
+                        product_id: 'model.product_id',
+                        timeperiod: 'model.timeperiod',
+                        variable: 'model.variable',
+                    },
+                    onChange: function (modelValue) {
+                        //scope.model.drilldown = scope.model.drilldown.slice(0, 1);
+                        //delete scope.model.drilldown[0].variable_value;
+                        //scope.$broadcast('schemaFormRedraw');
+                    },
+                    // htmlClass: "col-md-4",
+                },
+                
+                
+            ];
     $scope.model = {};
     $scope.submitted = function (form) {
         $scope.$broadcast("schemaFormValidate");
