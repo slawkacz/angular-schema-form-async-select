@@ -144,6 +144,9 @@ testApp.controller("appController",  function ($scope, $q, $timeout,$http) {
                     htmlClass: 'row',
                     fieldHtmlClass: "col-md-12 not-sortable",
                     decoratorClass: "row",
+                    onRemove:function(){
+                      console.log('here!')  
+                    },
                     items: [
                         {
                             key: "drilldown[].variable",

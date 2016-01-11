@@ -5,7 +5,7 @@
     <li class="list-group-item {{form.fieldHtmlClass}}"
         ng-repeat="item in modelArray track by $index">
       <button ng-hide="form.readonly || form.remove === null"
-              ng-click="deleteFromArray($index)"
+              ng-click="deleteFromArray($index);form.onRemove && form.onRemove()"
               style="position: relative; z-index: 20;"
               type="button" class="close pull-right">
               <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
