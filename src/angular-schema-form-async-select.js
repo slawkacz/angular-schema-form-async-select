@@ -149,7 +149,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
     $scope.form.options.scope = $scope;
 
     $scope.triggerTitleMap = function () {
-        console.log("listener triggered");
+        //console.log("listener triggered");
         // Ugly workaround to trigger titleMap expression re-evaluation so that the selectFilter it reapplied.
         $scope.form.titleMap.push({ "value": "345890u340598u3405u9", "name": "34095u3p4ouij" })
         $timeout(function () { $scope.form.titleMap.pop() })
@@ -219,12 +219,6 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
             //console.log("Call uiMultiSelectInitInternalModel");
             $scope.uiMultiSelectInitInternalModel($scope.externalModel);
         }
-        delete form.noResPlaceholder
-        if(form.titleMap.length) {
-            console.log(form.titleMap.length)
-            form.noResPlaceholder = "No results found";
-        }
-       
     };
 
     $scope.clone = function (obj) {
@@ -324,7 +318,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 function (data, status) {
                     console.log("Loading select items failed (URL: '" + String(finalOptions.httpPost.url) +
                         "' Parameter: " + String(finalOptions.httpPost.parameter) + "\nError: " + status);
-                    form.noResPlaceholder = "No results found";    
+                    
                     form.loading = false;
                 });
         }
@@ -338,7 +332,6 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 function (data, status) {
                     console.log("Loading select items failed (URL: '" + String(finalOptions.httpGet.url) +
                         "\nError: " + status);
-                    form.noResPlaceholder = "No results found";
                     form.loading = false;
                 });
         } else {

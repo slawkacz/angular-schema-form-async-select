@@ -4,12 +4,16 @@
   <ul class="list-group" ng-model="modelArray" ui-sortable="options.sortableOptions">
     <li class="list-group-item {{form.fieldHtmlClass}}"
         ng-repeat="item in modelArray track by $index">
-      <button ng-hide="form.readonly || form.remove === null"
-              ng-click="deleteFromArray($index);form.onRemove && form.onRemove()"
-              style="position: relative; z-index: 20;"
-              type="button" class="close pull-right">
-              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-      </button>
+      <div class="action-buttons pull-right">
+                 <button ng-hide="form.readonly || form.remove === null"
+                ng-click="deleteFromArray($index);form.onRemove && form.onRemove()"
+                style="position: relative; z-index: 20;"
+                type="button" class="close pull-right">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <button ng-hide="!form.onClone" ng-click="form.onClone(item)" style="position: relative; z-index: 20;" class="clone pull-right" title="Clone element"><i class="fa fa-clone"></i></button>
+
+      </div>
       <sf-decorator class="{{$parent.form.decoratorClass}}" ng-init="arrayIndex = $index" form="copyWithIndex($index)"></sf-decorator>
     </li>
   </ul>
