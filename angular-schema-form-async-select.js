@@ -9,7 +9,7 @@
 }(this, function(schemaForm) {
 angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/strap/straparray.html","<div sf-array=\"form\" class=\"schema-form-array {{form.htmlClass}}\"\n     ng-model=\"$$value$$\" ng-model-options=\"form.ngModelOptions\">\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{ form.title }}</label>\n  <ul class=\"list-group\" ng-model=\"modelArray\" ui-sortable=\"options.sortableOptions\">\n    <li class=\"list-group-item {{form.fieldHtmlClass}}\"\n        ng-repeat=\"item in modelArray track by $index\">\n      <button ng-hide=\"form.readonly || form.remove === null\"\n              ng-click=\"deleteFromArray($index);form.onRemove && form.onRemove()\"\n              style=\"position: relative; z-index: 20;\"\n              type=\"button\" class=\"close pull-right\">\n              <span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span>\n      </button>\n      <sf-decorator class=\"{{$parent.form.decoratorClass}}\" ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator>\n    </li>\n  </ul>\n  <div class=\"clearfix\" style=\"padding: 15px;\">\n    <button ng-hide=\"form.readonly || form.add === null\"\n            ng-click=\"appendToArray()\"\n            type=\"button\"\n            class=\"btn {{ form.style.add || \'btn-default\' }} pull-right\">\n      <i class=\"glyphicon glyphicon-plus\"></i>\n      {{ form.add || \'Add\'}}\n    </button>\n  </div>\n  <div class=\"help-block\"\n       ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n       ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div>\n</div>\n");
 $templateCache.put("directives/decorators/bootstrap/strap/strapmultiselect.html","<div ng-controller=\"asyncSelectController\" class=\"form-group {{form.htmlClass}}\"\n     ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\">\n    <label class=\"control-label {{form.labelHtmlClass}}\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div class=\"form-group {{form.fieldHtmlClass}}\" ng-init=\"populateTitleMap(form)\">\n        <button type=\"button\" class=\"btn btn-default\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\"\n                data-multiple=\"1\"  data-multiple=\"1\" data-max-length=\"{{form.options.inlineMaxLength}}\"\n                data-max-length-html=\"{{form.options.inlineMaxLengthHtml}}\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <span class=\"help-block\">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>\n    </div>\n</div>\n");
-$templateCache.put("directives/decorators/bootstrap/strap/strapselect.html","<div ng-controller=\"asyncSelectController\" class=\"form-group {{form.htmlClass}}\"\n     ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\">\n    <label class=\"{{form.labelHtmlClass}}\" ng-show=\"showTitle()\">{{form.title}}</label>\n    <div class=\"form-group {{form.fieldHtmlClass}}\" ng-init=\"populateTitleMap(form)\">\n        <button ng-if=\"(form.options.multiple == \'true\') || (form.options.multiple == true)\"\n                type=\"button\" class=\"grey lighten-5 black-text btn-sm btn\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-index=\"{{$index}}\"\n                data-parent=\"{{$parent.$index}}\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\" data-multiple=\"1\" data-max-length=\"{{form.options.inlineMaxLength}}\"\n                data-max-length-html=\"{{form.options.inlineMaxLengthHtml}}\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <button ng-if=\"!((form.options.multiple == \'true\') || (form.options.multiple == true)) && !form.loading\"\n                type=\"button\" class=\"grey lighten-5 black-text btn-sm btn\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <loader class=\"\" ng-if=\"form.loading\"></loader>\n        <span class=\"help-block\">{{ (hasError() && errorMessage(schemaError())) || form.description}} </span>\n    </div>\n</div>\n\n");}]);
+$templateCache.put("directives/decorators/bootstrap/strap/strapselect.html","<div ng-controller=\"asyncSelectController\" class=\"form-group {{form.htmlClass}}\"\n     ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\">\n    <label class=\"{{form.labelHtmlClass}}\" ng-show=\"showTitle()\">{{form.title}}</label>\n    <div class=\"form-group {{form.fieldHtmlClass}}\" ng-init=\"populateTitleMap(form)\">\n        <button ng-if=\"(form.options.multiple == \'true\') || (form.options.multiple == true)\"\n                type=\"button\" class=\"grey lighten-5 black-text btn-sm btn\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-index=\"{{$index}}\"\n                data-parent=\"{{$parent.$index}}\"\n                data-placeholder=\"{{form.noResPlaceholder || form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\" data-multiple=\"1\" data-max-length=\"{{form.options.inlineMaxLength}}\"\n                data-max-length-html=\"{{form.options.inlineMaxLengthHtml}}\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <button ng-if=\"!((form.options.multiple == \'true\') || (form.options.multiple == true))\"\n                type=\"button\" class=\"grey lighten-5 black-text btn-sm btn\" sf-changed=\"form\" schema-validate=\"form\" ng-model=\"$$value$$\"\n                data-placeholder=\"{{form.placeholder || form.schema.placeholder || (\'placeholders.select\')}}\"\n                data-html=\"1\"\n                ng-disabled=\"!form.titleMap.length\"\n                bs-options=\"item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;\"\n                bs-select>\n        </button>\n        <md-progress-linear md-mode=\"indeterminate\" style=\"height:3px;overflow:hidden\" ng-if=\"form.loading\"></md-progress-linear>\n        <span class=\"help-block\">{{ (hasError() && errorMessage(schemaError())) || form.description}} </span>\n    </div>\n</div>\n\n");}]);
 angular.module('schemaForm').config(
     ['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider',
         function (schemaFormProvider, schemaFormDecoratorsProvider, sfPathProvider) {
@@ -186,7 +186,6 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
     $scope.finalizeTitleMap = function (form, data, newOptions) {
         // Remap the data
         $scope.form.loading = false;
-        console.log($scope.form);
         form.titleMap = [];
 
         if (newOptions && "map" in newOptions && newOptions.map) {
@@ -232,7 +231,12 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
             //console.log("Call uiMultiSelectInitInternalModel");
             $scope.uiMultiSelectInitInternalModel($scope.externalModel);
         }
-
+        delete form.noResPlaceholder
+        if(form.titleMap.length) {
+            console.log(form.titleMap.length)
+            form.noResPlaceholder = "No results found";
+        }
+       
     };
 
     $scope.clone = function (obj) {
@@ -332,6 +336,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 function (data, status) {
                     console.log("Loading select items failed (URL: '" + String(finalOptions.httpPost.url) +
                         "' Parameter: " + String(finalOptions.httpPost.parameter) + "\nError: " + status);
+                    form.noResPlaceholder = "No results found";    
                     form.loading = false;
                 });
         }
@@ -345,6 +350,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 function (data, status) {
                     console.log("Loading select items failed (URL: '" + String(finalOptions.httpGet.url) +
                         "\nError: " + status);
+                    form.noResPlaceholder = "No results found";
                     form.loading = false;
                 });
         } else {

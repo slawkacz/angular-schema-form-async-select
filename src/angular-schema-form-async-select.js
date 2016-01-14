@@ -174,7 +174,6 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
     $scope.finalizeTitleMap = function (form, data, newOptions) {
         // Remap the data
         $scope.form.loading = false;
-        console.log($scope.form);
         form.titleMap = [];
 
         if (newOptions && "map" in newOptions && newOptions.map) {
@@ -220,7 +219,12 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
             //console.log("Call uiMultiSelectInitInternalModel");
             $scope.uiMultiSelectInitInternalModel($scope.externalModel);
         }
-
+        delete form.noResPlaceholder
+        if(form.titleMap.length) {
+            console.log(form.titleMap.length)
+            form.noResPlaceholder = "No results found";
+        }
+       
     };
 
     $scope.clone = function (obj) {
@@ -320,6 +324,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 function (data, status) {
                     console.log("Loading select items failed (URL: '" + String(finalOptions.httpPost.url) +
                         "' Parameter: " + String(finalOptions.httpPost.parameter) + "\nError: " + status);
+                    form.noResPlaceholder = "No results found";    
                     form.loading = false;
                 });
         }
@@ -333,6 +338,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 function (data, status) {
                     console.log("Loading select items failed (URL: '" + String(finalOptions.httpGet.url) +
                         "\nError: " + status);
+                    form.noResPlaceholder = "No results found";
                     form.loading = false;
                 });
         } else {

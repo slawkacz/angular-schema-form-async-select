@@ -6,20 +6,21 @@
                 type="button" class="grey lighten-5 black-text btn-sm btn" sf-changed="form" schema-validate="form" ng-model="$$value$$"
                 data-index="{{$index}}"
                 data-parent="{{$parent.$index}}"
-                data-placeholder="{{form.placeholder || form.schema.placeholder || ('placeholders.select')}}"
+                data-placeholder="{{form.noResPlaceholder || form.placeholder || form.schema.placeholder || ('placeholders.select')}}"
                 data-html="1" data-multiple="1" data-max-length="{{form.options.inlineMaxLength}}"
                 data-max-length-html="{{form.options.inlineMaxLengthHtml}}"
                 bs-options="item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;"
                 bs-select>
         </button>
-        <button ng-if="!((form.options.multiple == 'true') || (form.options.multiple == true)) && !form.loading"
+        <button ng-if="!((form.options.multiple == 'true') || (form.options.multiple == true))"
                 type="button" class="grey lighten-5 black-text btn-sm btn" sf-changed="form" schema-validate="form" ng-model="$$value$$"
                 data-placeholder="{{form.placeholder || form.schema.placeholder || ('placeholders.select')}}"
                 data-html="1"
+                ng-disabled="!form.titleMap.length"
                 bs-options="item.value as item.name for item in form.titleMap | selectFilter:this:$$value$$:&quot;$$value$$&quot;"
                 bs-select>
         </button>
-        <loader class="" ng-if="form.loading"></loader>
+        <md-progress-linear md-mode="indeterminate" style="height:3px;overflow:hidden" ng-if="form.loading"></md-progress-linear>
         <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}} </span>
     </div>
 </div>
