@@ -231,12 +231,6 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
             //console.log("Call uiMultiSelectInitInternalModel");
             $scope.uiMultiSelectInitInternalModel($scope.externalModel);
         }
-        delete form.noResPlaceholder
-        if(form.titleMap.length) {
-            console.log(form.titleMap.length)
-            form.noResPlaceholder = "No results found";
-        }
-       
     };
 
     $scope.clone = function (obj) {
