@@ -1,32 +1,26 @@
-<div sf-array="form" class="schema-form-array {{form.htmlClass}}"
-     ng-model="$$value$$" ng-model-options="form.ngModelOptions">
-  <label class="control-label" ng-show="showTitle()">{{ form.title }}</label>
-  <ul class="list-group" ng-model="modelArray" ui-sortable="options.sortableOptions">
-    <li class="list-group-item {{form.fieldHtmlClass}}"
-        ng-repeat="item in modelArray track by $index">
-      <div class="action-buttons pull-right">
-                 <button ng-hide="form.readonly || form.remove === null"
-                ng-click="deleteFromArray($index);form.onRemove && form.onRemove()"
-                style="position: relative; z-index: 20;"
-                type="button" class="close pull-right">
-                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-        </button>
-        <button ng-hide="!form.onClone" ng-click="form.onClone(item)" style="position: relative; z-index: 20;" class="clone pull-right" title="Clone element"><i class="fa fa-clone"></i></button>
+<div sf-array="form" class="schema-form-array {{form.htmlClass}}" ng-model="$$value$$" ng-model-options="form.ngModelOptions">
+    <label class="control-label" ng-show="showTitle()">{{ form.title }}</label>
+    <ul class="list-group" ng-model="modelArray" ui-sortable="options.sortableOptions">
+        <li class="list-group-item {{form.fieldHtmlClass}}" ng-repeat="item in modelArray track by $index">
+            <div class="action-buttons pull-right">
 
-      </div>
-      <sf-decorator class="{{$parent.form.decoratorClass}}" ng-init="arrayIndex = $index" form="copyWithIndex($index)"></sf-decorator>
-    </li>
-  </ul>
-  <div class="clearfix" style="padding: 15px;">
-    <button ng-hide="form.readonly || form.add === null"
-            ng-click="appendToArray()"
-            type="button"
-            class="btn {{ form.style.add || 'btn-default' }} pull-right">
-      <i class="glyphicon glyphicon-plus"></i>
-      {{ form.add || 'Add'}}
-    </button>
-  </div>
-  <div class="help-block"
-       ng-show="(hasError() && errorMessage(schemaError())) || form.description"
-       ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>
+
+                <span ng-hide="form.readonly || form.remove === null" ng-click="deleteFromArray($index);form.onRemove && form.onRemove()"
+                style="position: relative; z-index: 20;" type="button" class="close pull-right">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </span>
+                <span ng-hide="!form.onClone" ng-click="form.onClone(item);" style="position: relative; z-index: 20;" class="clone pull-right"
+                title="Clone element">
+                <i class="fa fa-clone"></i>
+                </span>
+            </div>
+            <sf-decorator class="{{$parent.form.decoratorClass}}" ng-init="arrayIndex = $index" form="copyWithIndex($index)"></sf-decorator>
+        </li>
+    </ul>
+    <div class="clearfix" style="padding: 15px;">
+        <button ng-hide="form.readonly || form.add === null" ng-click="appendToArray()" type="button" class="btn {{ form.style.add || 'btn-default' }} pull-right">
+            <i class="glyphicon glyphicon-plus"></i> {{ form.add || 'Add'}}
+        </button>
+    </div>
+    <div class="help-block" ng-show="(hasError() && errorMessage(schemaError())) || form.description" ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>
 </div>
