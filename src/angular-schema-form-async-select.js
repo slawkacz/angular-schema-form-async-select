@@ -23,6 +23,9 @@ angular.module('schemaForm').config(
 
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'array',
                 'directives/decorators/bootstrap/strap/straparray.html');
+                
+            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'default',
+                'directives/decorators/bootstrap/strap/strapinput.html');
 
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapselectasync',
                 'directives/decorators/bootstrap/strap/strapselect.html');
@@ -142,7 +145,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
     if (!$scope.form.options) {
         $scope.form.options = {};
     }
-
+    //console.log($scope.schemaError,$scope.form,$scope.hasError);
     $scope.select_model = {};
 
     //console.log("Setting options." + $scope.form.options.toString());
