@@ -1,4 +1,4 @@
-<div sf-array="form" class="schema-form-array {{form.htmlClass}}" ng-model="$$value$$" ng-model-options="form.ngModelOptions">
+<div sf-array="form" class="schema-form-array {{form.htmlClass}}" ng-class="{'has-error':hasError()}" ng-model="$$value$$" ng-model-options="form.ngModelOptions">
     <label class="control-label" ng-show="showTitle()">{{ form.title }}</label>
     <ul class="list-group" ng-model="modelArray" ui-sortable="options.sortableOptions">
         <li class="list-group-item {{form.fieldHtmlClass}}"  ng-init="form.onAdd && form.onAdd()" ng-repeat="item in modelArray track by $index">
