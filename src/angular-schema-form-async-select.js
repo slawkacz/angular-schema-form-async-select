@@ -33,20 +33,6 @@ angular.module('schemaForm').config(
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'checkbox',
                 'directives/decorators/bootstrap/strap/strapcheckbox.html');
 
-            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapmultiselectasync',
-                'directives/decorators/bootstrap/strap/strapmultiselect.html');
-
-
-            // UI SELECT
-            //Add to the bootstrap directive
-            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'uiselect',
-                'directives/decorators/bootstrap/uiselect/uiselect.html')
-
-
-            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'uiselectmultiple',
-                'directives/decorators/bootstrap/uiselect/uiselectmultiple.html')
-
-
         }])
     .directive("toggleSingleModel", function () {
         // some how we get this to work ...
@@ -143,7 +129,7 @@ angular.module('schemaForm').config(
         };
     });
 
-angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$http', '$timeout','schemaForm' ,function ($scope, $http, $timeout,schemaForm) {
 
     if (!$scope.form.options) {
         $scope.form.options = {};
@@ -343,6 +329,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
         } else {
             form.loading = false;
         }
+        
     };
 
 
