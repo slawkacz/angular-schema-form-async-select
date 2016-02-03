@@ -215,7 +215,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
             form.titleMap = data;
         }
         // removing selected value from model if notexisting in net titleMap
-        if(typeof $scope.ngModel.$modelValue === 'string' && !$scope.find_in_titleMap($scope.ngModel.$modelValue)) {
+        if($scope.ngModel && typeof $scope.ngModel.$modelValue === 'string' && !$scope.find_in_titleMap($scope.ngModel.$modelValue)) {
              form.key.reduce(function (previous, current, index) {
                 if (index == form.key.length - 1)
                     delete previous[current];
