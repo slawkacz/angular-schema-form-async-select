@@ -134,7 +134,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
     if (!$scope.form.options) {
         $scope.form.options = {};
     }
-    //console.log($scope.schemaError,$scope.form,$scope.hasError);
+
     $scope.select_model = {};
 
     //console.log("Setting options." + $scope.form.options.toString());
@@ -167,7 +167,6 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
         // Remap the data
         $scope.form.loading = false;
         form.titleMap = [];
-
         if (newOptions && "map" in newOptions && newOptions.map) {
             var current_row = null,
                 final = newOptions.map.nameProperty.length - 1,
@@ -201,7 +200,15 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
                 );
             form.titleMap = data;
         }
-
+        // removing selected value from model if notexisting in net titleMap
+        if(typeof $scope.ngModel.$modelValue === 'string' && !$scope.find_in_titleMap($scope.ngModel.$modelValue)) {
+             form.key.reduce(function (previous, current, index) {
+                if (index == form.key.length - 1)
+                    delete previous[current];
+                else
+                    return previous[current];
+            }, $scope.model);       
+        }
         if ($scope.insideModel && $scope.select_model.selected === undefined) {
             $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
         }
