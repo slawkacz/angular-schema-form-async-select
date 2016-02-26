@@ -32,7 +32,9 @@ angular.module('schemaForm').config(
             
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'checkbox',
                 'directives/decorators/bootstrap/strap/strapcheckbox.html');
-
+                
+	        schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'warningmsg',
+                'directives/decorators/bootstrap/strap/strapwarningmsg.html');
         }])
     .directive("toggleSingleModel", function () {
         // some how we get this to work ...
@@ -201,7 +203,7 @@ angular.module('schemaForm').controller('asyncSelectController', ['$scope', '$ht
             form.titleMap = data;
         }
         // removing selected value from model if notexisting in net titleMap
-        console.log($scope);
+        // console.log($scope);
         if(typeof $scope.ngModel.$modelValue === 'string' && !$scope.find_in_titleMap($scope.ngModel.$modelValue)) {
              form.key.reduce(function (previous, current, index) {
                 if (index == form.key.length - 1)

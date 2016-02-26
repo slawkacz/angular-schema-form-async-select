@@ -1,0 +1,5 @@
+<div class="form-group {{form.htmlClass}}" ng-class="{'has-error': hasError()}">
+    <label class="{{form.labelHtmlClass}}" ng-show="showTitle()">Warning</label>
+    <div class="help-block" ng-if="hasError()"  ng-bind="$$value$$"></div>
+    <span class="error" sf-changed="form" ng-model="$$value$$" schema-validate="form"></span> 
+</div> 
