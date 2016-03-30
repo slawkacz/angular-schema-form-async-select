@@ -35,6 +35,9 @@ angular.module('schemaForm').config(
                 
 	        schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'warningmsg',
                 'directives/decorators/bootstrap/strap/strapwarningmsg.html');
+
+            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'autogenerateinput',
+                'directives/decorators/bootstrap/strap/strapautogenerateinput.html');
         }])
     .directive("toggleSingleModel", function () {
         // some how we get this to work ...
