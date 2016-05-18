@@ -4,7 +4,7 @@
   "main": [
     "angular-schema-form-async-select.min.js"
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "authors": [
     "Cheng Zhu<cheng@aqmin.com>",
     "Stevehu",
