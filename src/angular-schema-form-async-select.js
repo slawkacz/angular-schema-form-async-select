@@ -27,6 +27,9 @@ angular.module('schemaForm').config(
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'default',
                 'directives/decorators/bootstrap/strap/strapinput.html');
 
+            schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'number',
+                'directives/decorators/bootstrap/strap/strapinput.html');
+            
             schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'strapselectasync',
                 'directives/decorators/bootstrap/strap/strapselect.html');
             
